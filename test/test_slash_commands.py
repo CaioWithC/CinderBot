@@ -177,6 +177,22 @@ class SlashCommandTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(embed.thumbnail.url, "https://example.com/cover.jpg")
         self.assertIn("spotify-track-id", embed.description)
 
+    async def test_music_slash_command_with_member_option(self):
+        with patch("cogs.music.load_playlist", return_value=[{
+            "title": "Track",
+            "artist": "The Artist",
+            "album": "Album",
+            "spotify_id": "spotify-track-id",
+        }]), patch(
+            "cogs.music.Music.lookup_album_art",
+            new=AsyncMock(return_value="https://example.com/cover.jpg"),
+        ):
+            result = await self.slash("musica", member=self.member)
+
+        embed = result.sent[-1]["embed"]
+        self.assertEqual(embed.title, "🎵 Música do dia")
+        self.assertIn(self.member.mention, embed.description)
+
     async def test_admmusica_slash_command_changes_song_and_sends_embed(self):
         self.author.guild_permissions.administrator = True
         with patch("cogs.music.load_playlist", return_value=[{
@@ -839,7 +855,7 @@ class SlashCommandTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(result.sent[0].get("ephemeral"))
         embed = result.sent[0]["embed"]
         self.assertIn("Central de Ajuda", embed.title)
-        self.assertEqual(embed.color.value, 0x77E5BC)
+        self.assertEqual(embed.color.value, 0xB8472A)
 
         view = result.sent[0]["view"]
         self.assertIsNotNone(view)

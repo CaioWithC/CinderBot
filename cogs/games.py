@@ -14,7 +14,8 @@ from cogs.game_rules import (Blackjack, Mines, Dice, DICE_SIDES, DICE_MULTIPLIER
                         parse_dice, validate_guess)
 
 log = logging.getLogger(__name__)
-GREEN = 0x77E5BC
+CINDER_COLOR = 0xB8472A
+GREEN = CINDER_COLOR
 
 
 class BettingView(nextcord.ui.View):

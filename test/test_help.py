@@ -9,7 +9,7 @@ from nextcord.ext import commands
 
 from cogs.help_system import (
     HELP_CATEGORIES,
-    RALSEI_COLOR,
+    CINDER_COLOR,
     HelpSelect,
     HelpView,
     build_category_embed,
@@ -38,7 +38,7 @@ class HelpSystemTests(unittest.IsolatedAsyncioTestCase):
 
     def test_build_home_embed_structure_and_color(self):
         embed = build_home_embed(self.bot, self.author)
-        self.assertEqual(embed.color.value, RALSEI_COLOR)
+        self.assertEqual(embed.color.value, CINDER_COLOR)
         self.assertIn("Central de Ajuda", embed.title)
         self.assertIn("TestUser", embed.description)
         self.assertIn("/help command:<comando>", embed.description)
@@ -47,7 +47,7 @@ class HelpSystemTests(unittest.IsolatedAsyncioTestCase):
     def test_build_category_embed_lists_commands(self):
         for cat_key, cat_data in HELP_CATEGORIES.items():
             embed = build_category_embed(self.bot, cat_key, self.author)
-            self.assertEqual(embed.color.value, RALSEI_COLOR)
+            self.assertEqual(embed.color.value, cat_data.get("color", CINDER_COLOR))
             self.assertIn(cat_data["label"], embed.title)
             self.assertGreater(len(embed.fields), 0)
             for field in embed.fields:
@@ -61,7 +61,7 @@ class HelpSystemTests(unittest.IsolatedAsyncioTestCase):
         cmd = self.bot.get_command("mines")
         self.assertIsNotNone(cmd)
         embed = build_command_detail_embed(cmd, self.author)
-        self.assertEqual(embed.color.value, RALSEI_COLOR)
+        self.assertEqual(embed.color.value, CINDER_COLOR)
         self.assertEqual(embed.title, "Ajuda: mines")
         field_names = [f.name for f in embed.fields]
         self.assertIn("Prefixo", field_names)

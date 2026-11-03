@@ -15,7 +15,8 @@ from cogs.uno_render import DECKS, card_label, render_card, render_hand
 from db import EconomyError, database
 
 log = logging.getLogger(__name__)
-GREEN = 0x77E5BC
+CINDER_COLOR = 0xB8472A
+GREEN = CINDER_COLOR
 LOBBY_SECONDS = 900
 BOARD_MESSAGE_INTERVAL = 10
 RULE_OPTIONS = (
@@ -345,7 +346,7 @@ class SwapView(SafeView):
 
 
 def rules_embed(table):
-    embed = nextcord.Embed(title="🃏 Regras desta mesa", color=0xF5CD47, description=(
+    embed = nextcord.Embed(title="🃏 Regras desta mesa", color=0xF5CE5B, description=(
         "Jogue uma carta da **mesma cor, número ou símbolo** do topo. Coringas escolhem a cor.\n"
         "Sem carta? **Compre 1**; se servir, jogue a carta comprada ou passe. Se não servir, passa automaticamente.\n"
         "Ao ficar com **1 carta**, você tem **3 segundos** para **Gritar Uno!**, ou pode declarar na confirmação "
@@ -501,7 +502,7 @@ class Uno(commands.Cog):
             await self.refresh_lobby(table)
 
     async def refresh_lobby(self, table, *, repost=False):
-        embed = nextcord.Embed(title="🃏 Mesa de Six · Uno", color=0xF5CD47,
+        embed = nextcord.Embed(title="🃏 Mesa de Six · Uno", color=0xF5CE5B,
             description=f"{len(table.members)}/20 jogadores · 60s por vez · o anfitrião começa quando quiser\n\n" +
                 "\n".join(f"{'✅' if uid in table.ready else '⏳'} <@{uid}>" + (" · 👑 anfitrião" if uid == table.host_id else "")
                            for uid in table.members))

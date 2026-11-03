@@ -128,6 +128,11 @@ class SlashCommands(commands.Cog):
     async def sync(self, interaction: nextcord.Interaction):
         await self.invoke(interaction, "sync")
 
+    @nextcord.slash_command(name="ownersay", description="Dono: envia uma mensagem pelo Cinder em qualquer servidor.",
+                            integration_types=ALL_INSTALLS, contexts=ALL_CONTEXTS)
+    async def ownersay(self, interaction: nextcord.Interaction):
+        await self.invoke(interaction, "ownersay", ephemeral=True)
+
     @nextcord.slash_command(name="send", description="Administrador: envia uma mensagem pelo bot.",
                             contexts=GUILD_ONLY, default_member_permissions=ADMIN)
     async def send(self, interaction: nextcord.Interaction,
@@ -213,8 +218,11 @@ class SlashCommands(commands.Cog):
 
     @nextcord.slash_command(name="musica", description="Receba sua música do dia com a capa do álbum.",
                             integration_types=ALL_INSTALLS, contexts=ALL_CONTEXTS)
-    async def musica(self, interaction: nextcord.Interaction):
-        await self.invoke(interaction, "musica")
+    async def musica(self, interaction: nextcord.Interaction,
+                     member: typing.Union[nextcord.Member, nextcord.User] = nextcord.SlashOption(
+                         description="Membro cuja música será exibida (deixe em branco para a sua).",
+                         required=False)):
+        await self.invoke(interaction, "musica", member=member)
 
     @nextcord.slash_command(name="admmusica", description="Administrador: troque a música do dia de um membro ou a sua.",
                             contexts=GUILD_ONLY, default_member_permissions=ADMIN)
@@ -242,10 +250,21 @@ class SlashCommands(commands.Cog):
                         vaga: str = nextcord.SlashOption(description="Nome ou código do bico freelance (opcional; omita para abrir o menu).", required=False)):
         await self.invoke(interaction, "freelance", vaga=vaga)
 
-    @nextcord.slash_command(name="clearmemory", description="Limpa a memória de conversa do Ralsei neste canal.",
+    @nextcord.slash_command(name="ia", description="Converse com o Cinder usando inteligência artificial.",
+                            integration_types=ALL_INSTALLS, contexts=ALL_CONTEXTS)
+    async def ia(self, interaction: nextcord.Interaction,
+                 pergunta: str = nextcord.SlashOption(description="Pergunta ou mensagem para o Cinder.")):
+        await self.invoke(interaction, "ia", pergunta=pergunta)
+
+    @nextcord.slash_command(name="clearmemory", description="Limpa a memória de conversa do Cinder neste canal.",
                             integration_types=ALL_INSTALLS, contexts=ALL_CONTEXTS)
     async def clearmemory(self, interaction: nextcord.Interaction):
         await self.invoke(interaction, "clearmemory")
+
+    @nextcord.slash_command(name="site", description="Visite o nosso site.",
+                            integration_types=ALL_INSTALLS, contexts=ALL_CONTEXTS)
+    async def site(self, interaction: nextcord.Interaction):
+        await self.invoke(interaction, "site")
 
     @nextcord.slash_command(name="rob", description="Roube DarkMoney de outro membro a cada 60 minutos.",
                             integration_types=ALL_INSTALLS, contexts=ALL_CONTEXTS)
@@ -299,7 +318,7 @@ class SlashCommands(commands.Cog):
                     amount: str = nextcord.SlashOption(description=BET_DESCRIPTION)):
         await self.invoke(interaction, "slots", amount=amount)
 
-    @nextcord.slash_command(name="poker", description="Texas Hold’em com Ralsei: aposte D$ com amigos ou 4 bots.",
+    @nextcord.slash_command(name="poker", description="Texas Hold’em com Cinder: aposte D$ com amigos ou 4 bots.",
                             integration_types=ALL_INSTALLS, contexts=ALL_CONTEXTS)
     async def poker(self, interaction: nextcord.Interaction,
                     amount: str = nextcord.SlashOption(description="Entrada por pessoa: mínimo 20 D$. Ex.: 1000, 10k, 1m.",
@@ -366,7 +385,7 @@ class SlashCommands(commands.Cog):
 
     @profile.subcommand(name="color", description="Altere a cor dos painéis do seu perfil.")
     async def profile_color(self, interaction: nextcord.Interaction,
-                            value: str = nextcord.SlashOption(description="Cor hexadecimal de seis dígitos. Ex.: #77E5BC.")):
+                            value: str = nextcord.SlashOption(description="Cor hexadecimal de seis dígitos. Ex.: #B8472A.")):
         await self.invoke(interaction, "profile color", value=value)
 
     @profile.subcommand(name="about", description="Altere seu Sobre mim; use reset para limpar.")
@@ -415,6 +434,50 @@ class SlashCommands(commands.Cog):
                       membro: nextcord.User = nextcord.SlashOption(description="Ver a conta AniList de outro membro do Discord.", required=False),
                       acao: str = nextcord.SlashOption(description="Ação para sua conta.", choices=["vincular", "desvincular"], required=False)):
         await self.invoke(interaction, "anilist", usuario=usuario, membro=membro, acao=acao)
+
+    @nextcord.slash_command(name="e621", description="Pesquise imagens ou vídeos no e621.",
+                            integration_types=ALL_INSTALLS, contexts=ALL_CONTEXTS)
+    async def e621(self, interaction: nextcord.Interaction):
+        pass
+
+    @e621.subcommand(name="image", description="Pesquise uma imagem no e621 por tags.")
+    async def e621_image(self, interaction: nextcord.Interaction,
+                         tags: str = nextcord.SlashOption(description="Tags de busca. Ex.: male/male -solo order:score")):
+        await self.invoke(interaction, "e621 image", tags=tags)
+
+    @e621.subcommand(name="video", description="Pesquise um vídeo no e621 por tags.")
+    async def e621_video(self, interaction: nextcord.Interaction,
+                         tags: str = nextcord.SlashOption(description="Tags de busca. Ex.: male/male animation order:score")):
+        await self.invoke(interaction, "e621 video", tags=tags)
+
+    @e621.subcommand(name="top", description="Ranking de tags e artistas mais pesquisados no servidor.")
+    async def e621_top(self, interaction: nextcord.Interaction,
+                       tipo: str = nextcord.SlashOption(
+                           description="Escolha a categoria do ranking (padrão: tudo).",
+                           choices=["tudo", "tags", "artistas"],
+                           default="tudo",
+                           required=False,
+                       )):
+        await self.invoke(interaction, "e621 top", tipo=tipo)
+
+    @e621.subcommand(name="blocktag", description="Bloqueie uma tag das buscas e621 neste servidor.")
+    async def e621_blocktag(self, interaction: nextcord.Interaction,
+                            tag: str = nextcord.SlashOption(description="Tag(s) a bloquear (separadas por espaço). Ex.: gore scat")):
+        await self.invoke(interaction, "e621 blocktag", tag=tag)
+
+    @e621.subcommand(name="unblocktag", description="Desbloqueie uma tag das buscas e621 neste servidor.")
+    async def e621_unblocktag(self, interaction: nextcord.Interaction,
+                              tag: str = nextcord.SlashOption(description="Tag(s) a desbloquear (separadas por espaço). Ex.: gore scat")):
+        await self.invoke(interaction, "e621 unblocktag", tag=tag)
+
+    @e621.subcommand(name="blocklist", description="Veja a lista de tags bloqueadas no servidor.")
+    async def e621_blocklist(self, interaction: nextcord.Interaction):
+        await self.invoke(interaction, "e621 blocklist")
+
+    @e621.subcommand(name="random", description="Post aleatório popular do e621 (score ≥ 1000).")
+    async def e621_random(self, interaction: nextcord.Interaction,
+                          tags: str = nextcord.SlashOption(description="Tags opcionais para filtrar. Ex.: canine male/male", required=False, default="")):
+        await self.invoke(interaction, "e621 random", tags=tags)
 
 
 def setup(bot):

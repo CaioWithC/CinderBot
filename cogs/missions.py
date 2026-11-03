@@ -22,7 +22,7 @@ class Missions(commands.Cog):
         if action not in {"view", "ver"}:
             raise EconomyError("Use r.missions para ver o progresso ou r.missions claim para resgatar os bônus.")
         statuses, reset_at = self.storage.mission_status(ctx.author.id)
-        embed = nextcord.Embed(title="📜 Missões diárias", color=0x77E5BC,
+        embed = nextcord.Embed(title="📜 Missões diárias", color=0xF5CE5B,
                               description="Complete as tarefas e ganhe bônus de DarkMoney!\n"
                                           f"Renovam <t:{reset_at}:R> (00:00 GMT-3).")
         for status in statuses:

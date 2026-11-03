@@ -248,7 +248,7 @@ class TarotTests(unittest.IsolatedAsyncioTestCase):
         ai_cog.generate_completion.assert_awaited_once()
         messages = ai_cog.generate_completion.await_args.args[0]
         self.assertEqual(len(messages), 2)
-        self.assertIn("Ralsei", messages[0]["content"])
+        self.assertIn("Cinder", messages[0]["content"])
         self.assertIn(deck[0]["name_pt"], messages[1]["content"])
 
 

@@ -1,4 +1,4 @@
-"""Vercel Serverless Function entry point for RalseiBot Dashboard."""
+"""Vercel Serverless Function entry point for CinderBot Dashboard."""
 import os
 import sys
 import traceback

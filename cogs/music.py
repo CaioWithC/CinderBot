@@ -30,7 +30,7 @@ PLAYLIST_PATH = Path(__file__).resolve().parent.parent / "assets" / "playlist.cs
 OVERRIDES_PATH = Path(__file__).resolve().parent.parent / "assets" / "music_overrides.json"
 MUSICBRAINZ_SEARCH_URL = "https://musicbrainz.org/ws/2/release-group/"
 COVER_ART_URL = "https://coverartarchive.org/release-group/{mbid}"
-USER_AGENT = "RalseiBot/1.0 (https://github.com/CaioWithC/RalseiBot)"
+USER_AGENT = "CinderBot/1.0 (https://github.com/CaioWithC/CinderBot)"
 
 
 GOOGLE_SEARCH_IMAGE_URL = "https://www.google.com/search"
@@ -373,7 +373,7 @@ class Music(commands.Cog):
         embed = nextcord.Embed(
             title=title,
             description=description,
-            color=0x77E5BC,
+            color=0xB8472A,
         )
         embed.add_field(name="Artista", value=song["artist"], inline=True)
         if song["album"]:
@@ -390,14 +390,27 @@ class Music(commands.Cog):
         cls=DualCommand,
         name="musica",
         aliases=["music", "song", "musica-do-dia"],
-        help="Receba sua música do dia, escolhida da playlist e com a capa do álbum.",
+        help="Receba sua música do dia ou veja a de alguém: r.musica [@membro].",
     )
-    async def musica(self, ctx):
+    async def musica(
+        self,
+        ctx,
+        member: typing.Union[nextcord.Member, nextcord.User] = None,
+    ):
+        target = member or ctx.author
+        if getattr(target, "bot", False):
+            raise EconomyError("Bots não têm recomendação diária de música.")
+
         songs = load_playlist()
-        song = self.get_user_song(ctx.author.id, songs)
-        description = (
-            f"{ctx.author.mention}, sua recomendação de hoje é **{song['title']}**."
-        )
+        song = self.get_user_song(target.id, songs)
+        if target.id == ctx.author.id:
+            description = (
+                f"{ctx.author.mention}, sua recomendação de hoje é **{song['title']}**."
+            )
+        else:
+            description = (
+                f"A recomendação de hoje de {target.mention} é **{song['title']}**."
+            )
         await self._send_song_embed(
             ctx,
             song,

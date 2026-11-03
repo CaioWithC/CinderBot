@@ -9,7 +9,9 @@ from cogs.poker_rules import STREETS
 from cogs.uno_render import _font
 
 ASSETS = Path(__file__).resolve().parent.parent / "assets"
-MINT = "#77e5bc"
+CINDER_COLOR = "#b8472a"
+MINT = CINDER_COLOR
+GOLD = "#f5ce5b"
 WHITE = "#f0f5f3"
 MUTED = "#9eaead"
 POSITIONS = ((350, 230), (850, 230), (1040, 451), (850, 669), (350, 669), (160, 451))
@@ -80,7 +82,7 @@ def render_table(players, *, game=None, stake=1000, dealer_avatar=None, cancelle
         ImageDraw.Draw(mask).ellipse((0, 0, 103, 103), fill=255)
         draw.ellipse((544, 130, 655, 241), outline=MINT, width=3)
         canvas.paste(avatar, (548, 134), mask)
-    label(draw, (600, 261), "Ralsei · Dealer", 18, MINT, bold=True)
+    label(draw, (600, 261), "Cinder · Dealer", 18, MINT, bold=True)
 
     board = game.board if game else []
     label(draw, (600, 339), "POTE" if game else "ENTRADA POR PESSOA", 14, MUTED, bold=True)
@@ -133,7 +135,7 @@ def render_table(players, *, game=None, stake=1000, dealer_avatar=None, cancelle
     footer = ("Mesa encerrada · entradas devolvidas" if cancelled else
               "Mão encerrada · fichas finais devolvidas ao saldo" if game and game.done else
               "Suas cartas ficam em ‘Ver minhas cartas’ · 60 segundos por jogada" if game else
-              "1 pessoa: +4 bots · 2–6 pessoas: multiplayer · Ralsei distribui as cartas")
+              "1 pessoa: +4 bots · 2–6 pessoas: multiplayer · Cinder distribui as cartas")
     label(draw, (600, 784), footer, 16, MUTED, width=1120)
     return png(canvas)
 

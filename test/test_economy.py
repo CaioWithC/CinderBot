@@ -126,7 +126,7 @@ class PaymentTests(unittest.IsolatedAsyncioTestCase):
         embed = cog.money_embed("Título", "Descrição")
         self.assertEqual(embed.title, "Título")
         self.assertEqual(embed.description, "Descrição")
-        self.assertEqual(embed.color.value, 0x77E5BC)
+        self.assertEqual(embed.color.value, 0xF5CE5B)
 
         custom_embed = cog.money_embed("Título 2", "Descrição 2", color=0x123456)
         self.assertEqual(custom_embed.color.value, 0x123456)
@@ -142,7 +142,7 @@ class PaymentTests(unittest.IsolatedAsyncioTestCase):
         embed = ctx.send.call_args.kwargs["embed"]
         view = ctx.send.call_args.kwargs["view"]
         self.assertIn("Mercado de Trabalho", embed.title)
-        self.assertEqual(embed.color.value, 0x77E5BC)
+        self.assertEqual(embed.color.value, 0xF5CE5B)
 
         # 2. Select work from view
         view.message = SimpleNamespace(edit=AsyncMock())
@@ -158,7 +158,7 @@ class PaymentTests(unittest.IsolatedAsyncioTestCase):
         result_embed = view.message.edit.call_args.kwargs["embed"]
         self.assertIn("Trabalho concluído", result_embed.title)
         self.assertIn("25,000 D$", result_embed.description)
-        self.assertEqual(result_embed.color.value, 0x77E5BC)
+        self.assertEqual(result_embed.color.value, 0xF5CE5B)
 
         # 3. Freelance menu display
         ctx.send.reset_mock()
@@ -167,7 +167,7 @@ class PaymentTests(unittest.IsolatedAsyncioTestCase):
         free_embed = ctx.send.call_args.kwargs["embed"]
         free_view = ctx.send.call_args.kwargs["view"]
         self.assertIn("Painel de Freelance", free_embed.title)
-        self.assertEqual(free_embed.color.value, 0x77E5BC)
+        self.assertEqual(free_embed.color.value, 0xF5CE5B)
 
         # 4. Select freelance from view
         free_view.message = SimpleNamespace(edit=AsyncMock())
@@ -183,7 +183,7 @@ class PaymentTests(unittest.IsolatedAsyncioTestCase):
         free_result_embed = free_view.message.edit.call_args.kwargs["embed"]
         self.assertIn("Freelance concluído", free_result_embed.title)
         self.assertIn("500 D$", free_result_embed.description)
-        self.assertEqual(free_result_embed.color.value, 0x77E5BC)
+        self.assertEqual(free_result_embed.color.value, 0xF5CE5B)
 
 
 if __name__ == "__main__":

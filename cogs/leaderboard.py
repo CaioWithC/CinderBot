@@ -53,20 +53,20 @@ def render_profile(canvas, avatar, x, y, size):
 def render_leaderboard(entries, page, pages, total):
     """entries are (rank, display_name, balance, is_requester[, avatar_bytes])."""
     width, height = 1000, 252 + max(1, len(entries)) * 78
-    canvas = Image.new("RGB", (width, height), "#101c24")
+    canvas = Image.new("RGB", (width, height), "#13304f")
     draw = ImageDraw.Draw(canvas)
     title, name_font, small = font(42, True), font(23, True), font(17)
     amount_font = font(24, True)
-    draw.rounded_rectangle((28, 25, 972, 159), radius=24, fill="#1a3438")
-    draw.text((54, 43), "RALSEI  /  DarkMoney", font=small, fill="#77e5bc")
-    draw.text((52, 72), "Os mais ricos", font=title, fill="#f1f8f4")
-    draw.text((55, 128), "RANKING GLOBAL  •  Saldo disponível", font=small, fill="#adc6c5")
-    draw.text((48, 178), "POSIÇÃO / JOGADOR", font=small, fill="#adc6c5")
-    draw.text((952, 178), "DarkMoney", font=small, fill="#adc6c5", anchor="ra")
+    draw.rounded_rectangle((28, 25, 972, 159), radius=24, fill="#1b3b61")
+    draw.text((54, 43), "CINDER  /  DarkMoney", font=small, fill="#b8472a")
+    draw.text((52, 72), "Os mais ricos", font=title, fill="#ffffff")
+    draw.text((55, 128), "RANKING GLOBAL  •  Saldo disponível", font=small, fill="#dce6f0")
+    draw.text((48, 178), "POSIÇÃO / JOGADOR", font=small, fill="#dce6f0")
+    draw.text((952, 178), "DarkMoney", font=small, fill="#dce6f0", anchor="ra")
     top_balance = max((entry[2] for entry in entries), default=1) or 1
-    medals = {1: "#f4cc72", 2: "#bed0e0", 3: "#dca887"}
+    medals = {1: "#f5ce5b", 2: "#ffffff", 3: "#b8472a"}
     if not entries:
-        draw.text((50, 230), "Ainda não há jogadores. Comece com r.daily!", font=name_font, fill="#f1f8f4")
+        draw.text((50, 230), "Ainda não há jogadores. Comece com r.daily!", font=name_font, fill="#ffffff")
     for index, entry in enumerate(entries):
         rank, name, balance, own = entry[:4]
         avatar = entry[4] if len(entry) > 4 else None
@@ -74,7 +74,7 @@ def render_leaderboard(entries, page, pages, total):
         color = medals.get(rank, "#80a3ac")
         draw.rounded_rectangle((30, y, 970, y + 69), radius=14,
                                fill="#203d3d" if own else "#192a34",
-                               outline="#77e5bc" if own else None, width=2)
+                               outline="#b8472a" if own else None, width=2)
         rank_label = f"{rank:02}"
         rank_size = 23
         rank_font = name_font
@@ -86,14 +86,14 @@ def render_leaderboard(entries, page, pages, total):
         initial = next((char.upper() for char in name if char.isalnum()), "?")
         draw.text((130, y + 34), initial, font=font(20, True), fill="#101c24", anchor="mm")
         render_profile(canvas, avatar, 108, y + 12, 44)
-        draw.text((170, y + 13), fit(draw, name, name_font, 470), font=name_font, fill="#f1f8f4")
+        draw.text((170, y + 13), fit(draw, name, name_font, 470), font=name_font, fill="#ffffff")
         bar = int(440 * max(0, balance) / top_balance)
         draw.rounded_rectangle((170, y + 49, 610, y + 53), radius=2, fill="#29414a")
         if bar > 0:
             draw.rounded_rectangle((170, y + 49, 170 + bar, y + 53), radius=2, fill=color)
-        draw.text((950, y + 20), f"{balance:,}", font=amount_font, fill="#f1f8f4", anchor="ra")
-    draw.text((40, height - 29), f"Página {page}/{pages}  •  {total} jogadores", font=small, fill="#adc6c5")
-    draw.text((960, height - 29), "r.rich [página]", font=small, fill="#77e5bc", anchor="ra")
+        draw.text((950, y + 20), f"{balance:,}", font=amount_font, fill="#ffffff", anchor="ra")
+    draw.text((40, height - 29), f"Página {page}/{pages}  •  {total} jogadores", font=small, fill="#dce6f0")
+    draw.text((960, height - 29), "r.rich [página]", font=small, fill="#f5ce5b", anchor="ra")
     output = BytesIO()
     canvas.save(output, format="PNG")
     output.seek(0)

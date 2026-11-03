@@ -36,7 +36,7 @@ function fixture(t) {
         const replies = [];
         const message = {
             content,
-            author: { id: SENDER, username: 'Ralsei', bot: false },
+            author: { id: SENDER, username: 'Cinder', bot: false },
             guild,
             member: { permissions: new PermissionsBitField() },
             inGuild() { return this.guild !== null; },
@@ -68,7 +68,7 @@ test('prefix routing preserves ping, help, aliases, and ignores bots and unrelat
 
 test('balance creates users with zero coins and reports existing balances through aliases', async t => {
     const { database, send } = fixture(t);
-    assert.deepEqual(await send('r.balance'), ['Ralsei, seu saldo é: 0 TigerCoins.']);
+    assert.deepEqual(await send('r.balance'), ['Cinder, seu saldo é: 0 TigerCoins.']);
     database.addBalance(SENDER, 1234);
     assert.match((await send('r.saldo'))[0], /1234 TigerCoins/);
     assert.equal(database.getUser(SENDER).discord_id, SENDER);
@@ -148,7 +148,7 @@ test('database rolls back failed transfers and self-transfers leave balances unc
 });
 
 test('database reads the Python table schema and persists updates across restarts', () => {
-    const directory = mkdtempSync(path.join(os.tmpdir(), 'ralseibot-test-'));
+    const directory = mkdtempSync(path.join(os.tmpdir(), 'cinderbot-test-'));
     const filename = path.join(directory, 'bot.db');
     let database;
     try {

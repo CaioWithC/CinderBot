@@ -17,7 +17,8 @@ from cogs.poker_rules import HAND_NAMES, STREETS, Holdem, Player, PokerError, be
 from db import EconomyError, database
 
 log = logging.getLogger(__name__)
-GREEN = 0x77E5BC
+CINDER_COLOR = 0xB8472A
+GREEN = CINDER_COLOR
 LOBBY_SECONDS, TURN_SECONDS, BOT_SECONDS = 300, 60, 2
 BOT_NAMES = ("Kris", "Susie", "Lancer", "Noelle")
 
@@ -155,7 +156,7 @@ class Poker(commands.Cog):
             table.view.stop()
 
     @commands.command(cls=DualCommand, aliases=["holdem"], help=(
-        "Texas Hold’em com Ralsei como dealer: r.poker 1000 ou /poker amount:1000. "
+        "Texas Hold’em com Cinder como dealer: r.poker 1000 ou /poker amount:1000. "
         "Entrada mínima de 20 D$ (aceita K/M). Lobby para 1–6 pessoas; solo joga com 4 bots. "
         "Uma mão completa, cartas privadas e 60 segundos por vez. Fichas finais voltam ao saldo."))
     async def poker(self, ctx, amount: CoinAmount = 1000):
@@ -186,7 +187,7 @@ class Poker(commands.Cog):
         embed = nextcord.Embed(title="♠ Poker · Texas Hold’em", color=GREEN)
         if table.status == "lobby":
             small = max(1, table.stake // 100)
-            embed.description = (f"**Ralsei é o dealer.** Anfitrião: <@{table.host_id}>\n"
+            embed.description = (f"**Cinder é o dealer.** Anfitrião: <@{table.host_id}>\n"
                 f"Entrada: **{table.stake:,} D$** por pessoa · blinds: **{small:,}/{small * 2:,} D$**.\n"
                 "Clique em **Entrar** para aceitar a entrada. O anfitrião clica em **Começar**.\n"
                 "**1 pessoa:** joga com Kris, Susie, Lancer e Noelle (bots).\n"
@@ -199,7 +200,7 @@ class Poker(commands.Cog):
             embed.description = "Mesa encerrada. As entradas debitadas foram devolvidas."
         else:
             game = table.game
-            embed.description = f"**Ralsei · Dealer** | {STREETS[game.street]} | Pote: **{game.pot:,} D$**"
+            embed.description = f"**Cinder · Dealer** | {STREETS[game.street]} | Pote: **{game.pot:,} D$**"
             if not game.done:
                 player = game.actor
                 turn = player.name + " (bot)" if player.bot else f"<@{player.id}>"
@@ -221,7 +222,7 @@ class Poker(commands.Cog):
                                        f"{HAND_NAMES[best_hand(p.cards + game.board)[0]]}"
                                        for p in game.players if not p.folded)
                     embed.add_field(name="Showdown", value=hands[:1024], inline=False)
-                embed.set_footer(text="Abra outra mesa com /poker ou r.poker. Ralsei agradece a partida!")
+                embed.set_footer(text="Abra outra mesa com /poker ou r.poker. Cinder agradece a partida!")
             if game.log:
                 embed.add_field(name="Últimas jogadas", value="\n".join(game.log[-4:])[:1024], inline=False)
         embed.set_image(url="attachment://poker-table.png")
