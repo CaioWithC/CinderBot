@@ -119,7 +119,7 @@ class OwnerSayModal(nextcord.ui.Modal):
 
         self.message_input = nextcord.ui.TextInput(
             label="Mensagem",
-            placeholder="Digite a mensagem que o Ralsei enviará...",
+            placeholder="Digite a mensagem que o Cinder enviará...",
             style=nextcord.TextInputStyle.paragraph,
             min_length=1,
             max_length=2000,
@@ -154,7 +154,7 @@ class SendMessage(commands.Cog):
     @commands.command(
         cls=DualCommand,
         name="ownersay",
-        help="Dono: envia uma mensagem pelo Ralsei em qualquer servidor.",
+        help="Dono: envia uma mensagem pelo Cinder em qualquer servidor.",
     )
     @is_owner()
     async def owner_say(self, ctx, channel_id: str = None, *, message: str = None):

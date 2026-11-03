@@ -19,7 +19,7 @@ log = logging.getLogger(__name__)
 
 
 def review_embed(question, answers, author_id, status="Aguardando moderação"):
-    embed = nextcord.Embed(title="Sugestão para o quiz", description=question, color=0x77E5BC)
+    embed = nextcord.Embed(title="Sugestão para o quiz", description=question, color=0xF5CE5B)
     embed.add_field(name="Resposta e escritas aceitas", value="\n".join(answers), inline=False)
     embed.add_field(name="Enviado por", value=f"<@{author_id}> · ID: {author_id}", inline=False)
     embed.set_footer(text=status)
@@ -79,7 +79,7 @@ class QuizPanel(nextcord.ui.View):
         self.cog = cog
 
     @nextcord.ui.button(label="Sugerir pergunta", emoji="💡", style=nextcord.ButtonStyle.green,
-                        custom_id="ralseibot:quiz:suggest")
+                        custom_id="cinderbot:quiz:suggest")
     async def suggest(self, button, interaction):
         config = self.cog.storage.quiz_config(interaction.guild.id) if interaction.guild else None
         if not config or not config["enabled"]:
@@ -115,11 +115,11 @@ class QuizReview(nextcord.ui.View):
             log.warning("Could not update reviewed quiz suggestion %s", row["id"], exc_info=True)
         await interaction.followup.send(f"{status}!" + (" A pergunta entrou no quiz deste servidor." if approve else ""), ephemeral=True)
 
-    @nextcord.ui.button(label="Aprovar", style=nextcord.ButtonStyle.green, custom_id="ralseibot:quiz:approve")
+    @nextcord.ui.button(label="Aprovar", style=nextcord.ButtonStyle.green, custom_id="cinderbot:quiz:approve")
     async def approve(self, button, interaction):
         await self.decide(interaction, True)
 
-    @nextcord.ui.button(label="Recusar", style=nextcord.ButtonStyle.red, custom_id="ralseibot:quiz:reject")
+    @nextcord.ui.button(label="Recusar", style=nextcord.ButtonStyle.red, custom_id="cinderbot:quiz:reject")
     async def reject(self, button, interaction):
         await self.decide(interaction, False)
 
@@ -243,7 +243,7 @@ class Quiz(commands.Cog):
                 int(now) + ROUND_SECONDS, self.next_time(now))
             if row is None:
                 return
-            embed = nextcord.Embed(title="🧠 Quiz relâmpago!", description=question, color=0x77E5BC)
+            embed = nextcord.Embed(title="🧠 Quiz relâmpago!", description=question, color=0xF5CE5B)
             embed.add_field(name=f"Prêmio: {row['reward']:,} D$", value=
                 f"Escreva a resposta neste chat. A primeira pessoa a acertar ganha!\n"
                 f"Encerra <t:{row['expires_at']}:R>.", inline=False)
@@ -259,7 +259,7 @@ class Quiz(commands.Cog):
 
     async def send_panel(self, ctx):
         self.register_views()
-        embed = nextcord.Embed(title="💡 Ajude a criar o quiz!", color=0x77E5BC,
+        embed = nextcord.Embed(title="💡 Ajude a criar o quiz!", color=0xF5CE5B,
             description="Clique em **Sugerir pergunta** e informe a pergunta e a resposta correta.\n"
                         "A equipe verá seu usuário e avaliará a sugestão antes de adicioná-la ao quiz.\n"
                         "Até 3 sugestões pendentes por pessoa; intervalo de 1 minuto entre envios.")

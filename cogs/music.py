@@ -30,7 +30,7 @@ PLAYLIST_PATH = Path(__file__).resolve().parent.parent / "assets" / "playlist.cs
 OVERRIDES_PATH = Path(__file__).resolve().parent.parent / "assets" / "music_overrides.json"
 MUSICBRAINZ_SEARCH_URL = "https://musicbrainz.org/ws/2/release-group/"
 COVER_ART_URL = "https://coverartarchive.org/release-group/{mbid}"
-USER_AGENT = "RalseiBot/1.0 (https://github.com/CaioWithC/RalseiBot)"
+USER_AGENT = "CinderBot/1.0 (https://github.com/CaioWithC/CinderBot)"
 
 
 GOOGLE_SEARCH_IMAGE_URL = "https://www.google.com/search"
@@ -373,7 +373,7 @@ class Music(commands.Cog):
         embed = nextcord.Embed(
             title=title,
             description=description,
-            color=0x77E5BC,
+            color=0xB8472A,
         )
         embed.add_field(name="Artista", value=song["artist"], inline=True)
         if song["album"]:

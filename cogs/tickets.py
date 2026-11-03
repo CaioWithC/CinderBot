@@ -9,7 +9,7 @@ from nextcord.ext import commands
 from cogs.command_support import DualCommand
 from db import EconomyError, database
 
-TICKET_BUTTON_ID = "ralseibot:open-ticket"
+TICKET_BUTTON_ID = "cinderbot:open-ticket"
 
 
 def channel_slug(name):
@@ -103,7 +103,7 @@ class Tickets(commands.Cog):
         embed = nextcord.Embed(
             title="🎫 Atendimento",
             description="Clique no botão abaixo para abrir um ticket privado com a equipe.",
-            color=0x77E5BC,
+            color=0x13304F,
         )
         embed.set_footer(text=f"Os tickets serão criados em {category.name}.")
         await ctx.send(embed=embed, view=TicketPanel(self.bot, self.storage))

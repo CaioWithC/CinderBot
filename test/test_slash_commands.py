@@ -855,7 +855,7 @@ class SlashCommandTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(result.sent[0].get("ephemeral"))
         embed = result.sent[0]["embed"]
         self.assertIn("Central de Ajuda", embed.title)
-        self.assertEqual(embed.color.value, 0x77E5BC)
+        self.assertEqual(embed.color.value, 0xB8472A)
 
         view = result.sent[0]["view"]
         self.assertIsNotNone(view)

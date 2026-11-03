@@ -366,7 +366,7 @@ class DiscordTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(set(bot.extensions), {
                 f"cogs.{name}" for name in (
                     "economy", "music", "leaderboard", "games", "poker", "social", "activities",
-                    "marriage", "roleplay", "sendmessage", "tickets", "missions", "confessions", "quiz", "uno", "moderation", "slash_commands",
+                    "marriage", "roleplay", "sendmessage", "tickets", "missions", "confessions", "quiz", "uno", "moderation", "slash_commands", "ai", "userinfo", "tarot", "anilist", "booru",
                 )
             })
             for name in ("ping", "balance", "daily", "musica", "pay", "addbalance", "rich", "slots", "blackjack", "mines", "poker"):
@@ -613,7 +613,7 @@ class DiscordTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_rich_command_attaches_png_and_validates_pages(self):
         ctx = SimpleNamespace(author=SimpleNamespace(id=1), guild=None, send=AsyncMock())
-        bot = SimpleNamespace(get_user=lambda _: SimpleNamespace(display_name="Ralsei"))
+        bot = SimpleNamespace(get_user=lambda _: SimpleNamespace(display_name="Cinder"))
         cog = Leaderboard(bot, self.db)
         await Leaderboard.rich.callback(cog, ctx, 1)
         attachment = ctx.send.call_args.kwargs["file"]
@@ -625,7 +625,7 @@ class DiscordTests(unittest.IsolatedAsyncioTestCase):
 
 class ImageTests(unittest.TestCase):
     def test_png_for_empty_long_unicode_and_full_page(self):
-        for entries in ([], [(1, "💚 Ralsei 日本語 " * 30, MAX_BALANCE, True)],
+        for entries in ([], [(1, "🔥 Cinder 日本語 " * 30, MAX_BALANCE, True)],
                         [(i, f"Jogador {i}", i * 1000, False) for i in range(1, 11)]):
             with render_leaderboard(entries, 1, 1, len(entries)) as output:
                 with Image.open(output) as image:

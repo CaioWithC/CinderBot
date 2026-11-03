@@ -9,7 +9,8 @@ from cogs.command_support import DualCommand
 from cogs.tarot_data import draw_cards, format_card_reading, get_daily_card
 from cogs.tarot_render import render_single_card_table, render_three_card_table
 
-RALSEI_COLOR = 0x77E5BC
+CINDER_COLOR = 0xB8472A
+RALSEI_COLOR = CINDER_COLOR
 STEVE_P_URL = "https://steve-p.org/divm/"
 
 
@@ -94,7 +95,7 @@ class TarotView(nextcord.ui.View):
 
     @nextcord.ui.button(label="Resumir", emoji="✨", style=nextcord.ButtonStyle.success, row=0)
     async def summarize(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
-        """Explain and summarize the drawn cards using Ralsei's AI from cogs/ai.py."""
+        """Explain and summarize the drawn cards using Cinder's AI from cogs/ai.py."""
         await interaction.response.defer()
         ai_cog = self.cog.bot.get_cog("AI")
         if not ai_cog:
@@ -112,7 +113,7 @@ class TarotView(nextcord.ui.View):
 
         embed = nextcord.Embed(
             title="✨ Sabedoria do Oráculo · Resumo da IA",
-            color=RALSEI_COLOR,
+            color=CINDER_COLOR,
         )
         if self.question:
             desc = f"❓ **Pergunta:** “{self.question}”\n\n{summary}"
@@ -124,7 +125,7 @@ class TarotView(nextcord.ui.View):
 
         embed.description = desc
         embed.set_footer(
-            text="Interpretação por IA (Ralsei) · Baralho Rider-Waite-Smith (1909)",
+            text="Interpretação por IA (Cinder) · Baralho Rider-Waite-Smith (1909)",
             icon_url=self.cog._bot_avatar_url(),
         )
         await interaction.followup.send(embed=embed)
@@ -138,7 +139,7 @@ class TarotView(nextcord.ui.View):
                 f"Textos divinatórios originais extraídos do oráculo [steve-p.org/divm]({STEVE_P_URL}) "
                 "para as cartas sorteadas nesta leitura:"
             ),
-            color=RALSEI_COLOR,
+            color=CINDER_COLOR,
         )
 
         for card, is_rev in self.cards_data:
@@ -206,7 +207,7 @@ class Tarot(commands.Cog):
 
         embed = nextcord.Embed(
             title="🔮 Oráculo de Tarot · Carta do Dia",
-            color=RALSEI_COLOR,
+            color=CINDER_COLOR,
             description=(
                 f"✨ Olá, **{author.display_name}**! As cartas de **Rider-Waite-Smith** revelam "
                 f"a energia e a sabedoria que regem a sua jornada hoje:"
@@ -228,7 +229,7 @@ class Tarot(commands.Cog):
         embed.add_field(name=card_title, value=field_text, inline=False)
         embed.set_image(url="attachment://tarot_table.png")
         embed.set_footer(
-            text="Baralho Rider-Waite-Smith (1909) · steve-p.org/divm · Ralsei Bot",
+            text="Baralho Rider-Waite-Smith (1909) · steve-p.org/divm · Cinder Bot",
             icon_url=self._bot_avatar_url(),
         )
         return embed, file
@@ -268,7 +269,7 @@ class Tarot(commands.Cog):
 
         embed = nextcord.Embed(
             title="🔮 Oráculo de Tarot · Tiragem das Três Fases",
-            color=RALSEI_COLOR,
+            color=CINDER_COLOR,
             description=desc,
         )
 
@@ -286,7 +287,7 @@ class Tarot(commands.Cog):
 
         embed.set_image(url="attachment://tarot_table.png")
         embed.set_footer(
-            text="Baralho Rider-Waite-Smith (1909) · steve-p.org/divm · Ralsei Bot",
+            text="Baralho Rider-Waite-Smith (1909) · steve-p.org/divm · Cinder Bot",
             icon_url=self._bot_avatar_url(),
         )
         return embed, file

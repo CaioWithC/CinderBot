@@ -148,7 +148,7 @@ def build_job_menu_embed(author, category: str, available_jobs: list, user_stats
             f"• *{job.description}*\n"
         )
 
-    return nextcord.Embed(title=title, description="\n".join(lines), color=0x77E5BC)
+    return nextcord.Embed(title=title, description="\n".join(lines), color=0xF5CE5B)
 
 
 class JobSelect(nextcord.ui.Select):
@@ -280,7 +280,7 @@ class JobSelectView(nextcord.ui.View):
             f"Progresso: {bar}{level_up_msg}\n\n"
             f"💰 Seu novo saldo é **{balance:,} D$**."
         )
-        return nextcord.Embed(title=title, description=desc, color=0x77E5BC)
+        return nextcord.Embed(title=title, description=desc, color=0xF5CE5B)
 
     async def on_timeout(self):
         async with self.lock:
@@ -296,8 +296,8 @@ class JobSelectView(nextcord.ui.View):
                 try:
                     embed = nextcord.Embed(
                         title="⏰ Tempo esgotado",
-                        description=f"{self.author.mention}, você não escolheu uma vaga a tempo.\nO tempo de espera (cooldown) foi cancelado para você poder tentar novamente quando quiser!",
-                        color=0x77E5BC,
+                    description=f"{self.author.mention}, você não escolheu uma vaga a tempo.\nO tempo de espera (cooldown) foi cancelado para você poder tentar novamente quando quiser!",
+                    color=0xF5CE5B,
                     )
                     await self.message.edit(embed=embed, view=self)
                 except nextcord.HTTPException:
@@ -317,7 +317,7 @@ class Economy(commands.Cog):
     def storage(self, value):
         self._storage = value
 
-    def money_embed(self, title: str, description: str, color: int = 0x77E5BC) -> nextcord.Embed:
+    def money_embed(self, title: str, description: str, color: int = 0xF5CE5B) -> nextcord.Embed:
         return nextcord.Embed(title=title, description=description, color=color)
 
     @commands.command(cls=DualCommand, aliases=["saldo", "atm", "bal"], help="Mostra seu saldo em DarkMoney.")

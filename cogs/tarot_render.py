@@ -10,14 +10,15 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 ASSETS = Path(__file__).resolve().parent.parent / "assets"
 TAROT_DIR = ASSETS / "tarot"
 
-# Palette: Mystical dark velvet with gold and Ralsei mint accents
+# Palette: Dark velvet with cinder red-orange and warm gold accents
 CLOTH_BG = "#0b1216"           # Deep dark teal-slate velvet
 CLOTH_INNER = "#0f1c20"        # Slightly lighter center glow
-GOLD = "#e2b866"               # Warm celestial gold
+GOLD = "#f5ce5b"               # Warm celestial gold
 GOLD_MUTED = "#9a7d43"         # Antique gold
 GOLD_LIGHT = "#fff1c2"         # Shimmering gold highlight
-MINT = "#77e5bc"               # Ralsei mint green
-WHITE = "#f3f7f5"              # Crisp white
+MINT = "#b8472a"               # Cinder primary flame
+CINDER = "#b8472a"
+WHITE = "#ffffff"              # Crisp white
 MUTED = "#8da29c"              # Muted sage/slate
 SHADOW = (0, 0, 0, 160)
 
@@ -268,7 +269,7 @@ def render_single_card_table(
     draw_label(
         draw,
         (width // 2, height - 28),
-        "Rider-Waite-Smith (1909) · steve-p.org/divm · Ralsei Bot",
+        "Rider-Waite-Smith (1909) · steve-p.org/divm · Cinder Bot",
         size=12,
         color="#48615a",
         anchor="mm",
@@ -385,7 +386,7 @@ def render_three_card_table(
     draw_label(
         draw,
         (width // 2, height - 28),
-        "Baralho Rider-Waite-Smith (1909) · steve-p.org/divm · Ralsei Bot",
+        "Baralho Rider-Waite-Smith (1909) · steve-p.org/divm · Cinder Bot",
         size=12,
         color="#48615a",
         anchor="mm",

@@ -1,4 +1,4 @@
-# RalseiBot
+# CinderBot
 
 Bot de Discord em Python/Nextcord com comandos `r.` e `/`, economia global em DarkMoney, ranking em imagem e jogos de aposta com moedas virtuais.
 
@@ -51,7 +51,7 @@ Reinicie o bot depois de atualizar os arquivos. O Nextcord registra e atualiza o
 | `r.close` | `/close` | Fecha o ticket atual e exclui seu canal; somente o dono ou quem tem Gerenciar Canais; aliases: `fechar`, `closeticket` |
 | `r.rich [página]` | `/rich [page]` | PNG com 10 jogadores, posições, nomes e saldos; aliases: `richlist`, `leaderboard`, `top`, `rank` |
 | `r.profile [@usuário]` | `/profile view [member]` | Perfil em imagem com avatar, nome, ID, ranking, saldo, fundo e Sobre mim; alias: `perfil` |
-| `r.profile color #77E5BC` | `/profile color value:#77E5BC` | Cor dos painéis do seu perfil em hexadecimal; alias: `cor` |
+| `r.profile color #B8472A` | `/profile color value:#B8472A` | Cor dos painéis do seu perfil em hexadecimal; alias: `cor` |
 | `r.profile about Seu texto aqui` | `/profile about text:Seu texto aqui` | Altera o Sobre mim (até 300 caracteres); aliases: `sobremim`, `bio` |
 | `r.profile background` + imagem anexada | `/profile background image:arquivo` | Salva o fundo personalizado; alias: `fundo` |
 | `r.marry @membro` | `/marry member:@membro` | Pedido de casamento com confirmação das duas pessoas por botões; aliases: `casar`, `propose` |
@@ -62,7 +62,7 @@ Reinicie o bot depois de atualizar os arquivos. O Nextcord registra e atualiza o
 | `r.pat @membro` | `/pat member:@membro` | Faz carinho em alguém com GIF; alias: `carinho` |
 | `r.slots 100` | `/slots amount:100` | Caça-níqueis; aliases: `slot`, `slotmachine` |
 | `r.blackjack 100` | `/blackjack amount:100` | Blackjack com botões; aliases: `bj`, `21` |
-| `r.poker [entrada]` | `/poker [amount]` | Texas Hold’em com Ralsei; 1 pessoa joga com 4 bots, ou 2–6 pessoas jogam entre si; alias: `holdem` |
+| `r.poker [entrada]` | `/poker [amount]` | Texas Hold’em com Cinder; 1 pessoa joga com 4 bots, ou 2–6 pessoas jogam entre si; alias: `holdem` |
 | `r.mines 100 [bombas]` | `/mines amount:100 [mine_count]` | Escolha 1–15 bombas no menu ou informe a quantidade. Tabuleiro 4×4; alias: `minas` |
 | `r.dice 100 [dado] [número]` | `/dice amount:100 [dice] [number]` | Aposte no dado (d6, d8, d12, d20); quanto maior o dado, maior o multiplicador; aliases: `dado`, `dados` |
 | `r.six iniciar` ou `r.uno` | `/six iniciar` | Uno em tópicos públicos, com 2–20 pessoas, mãos privadas, regras configuráveis e apostas opcionais |
@@ -100,7 +100,7 @@ Referência: [permissões e operações de canais no Nextcord](https://docs.next
 
 Use **`r.poker 1000`**, **`r.holdem 1k`** ou **`/poker amount:1000`** em um servidor. A entrada padrão é **1.000 D$**, com mínimo de **20 D$**; aceita números inteiros e sufixos `K`/`M`. O lobby fica aberto por **5 minutos**. **Entrar** aceita o valor exibido; **Sair** remove sua participação antes da partida. Se o anfitrião sair, a próxima pessoa assume. Só o anfitrião pode **Começar** ou **Cancelar** o lobby.
 
-Ao começar com **uma pessoa**, entram **Kris, Susie, Lancer e Noelle**, quatro bots controlados pelo jogo. Com **2–6 pessoas**, a partida acontece apenas entre os participantes. **Ralsei é sempre o dealer**, representado pela **foto de perfil atual do bot no Discord**. A imagem pública usa a mesa fornecida em `assets/poker/table.png` e as 52 cartas de `assets/cards`, com nomes como `ace_of_spades.png` e `10_of_hearts.png`. Mantenha esses assets disponíveis ao copiar ou implantar o projeto.
+Ao começar com **uma pessoa**, entram **Kris, Susie, Lancer e Noelle**, quatro bots controlados pelo jogo. Com **2–6 pessoas**, a partida acontece apenas entre os participantes. **Cinder é sempre o dealer**, representado pela **foto de perfil atual do bot no Discord**. A imagem pública usa a mesa fornecida em `assets/poker/table.png` e as 52 cartas de `assets/cards`, com nomes como `ace_of_spades.png` e `10_of_hearts.png`. Mantenha esses assets disponíveis ao copiar ou implantar o projeto.
 
 Cada partida joga **uma mão completa de No Limit Texas Hold’em**. Todos começam com o mesmo valor de fichas. O small blind é `max(1, entrada // 100)` e o big blind é o dobro; o botão é sorteado. São distribuídas duas cartas privadas por pessoa, seguidas de pré-flop, flop, turn e river. **Ver minhas cartas** mostra as cartas em uma mensagem privada, inclusive ao usar o prefixo. A mesa pública só revela as mãos que chegaram ao showdown. Mãos descartadas e vitórias por desistência preservam as cartas privadas.
 

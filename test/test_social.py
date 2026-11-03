@@ -27,7 +27,7 @@ def png(color="blue", size=(320, 240)):
     return stream.getvalue()
 
 
-def user(user_id, name="Ralsei", avatar=None):
+def user(user_id, name="Cinder", avatar=None):
     asset = SimpleNamespace(read=AsyncMock(return_value=avatar or png("white")))
     asset.with_size = lambda size: asset
     asset.with_static_format = lambda fmt: asset
@@ -104,7 +104,7 @@ class ProfileImageTests(unittest.TestCase):
         profile = {"discord_id": "123456789012345678", "balance": 9_000_000_000_000_000,
                    "rank": 12345, "color": "#FFFFFF", "about": "W" * 300,
                    "background": normalize_background(png("blue"))}
-        with render_profile(profile, "Ralsei 💚 " * 30, png("red")) as output:
+        with render_profile(profile, "Cinder 🔥 " * 30, png("red")) as output:
             with Image.open(output) as image:
                 self.assertEqual(image.size, (WIDTH, HEIGHT))
                 self.assertEqual(image.getpixel((0, 0)), (255, 255, 255))

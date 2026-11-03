@@ -11,7 +11,7 @@ from cogs.command_support import DualCommand
 from db import EconomyError, database
 
 log = logging.getLogger(__name__)
-BUTTON_ID = "ralseibot:submit-confession"
+BUTTON_ID = "cinderbot:submit-confession"
 MAX_IMAGE_BYTES = 8 * 1024 * 1024
 IMAGE_EXTENSIONS = {"PNG": "png", "JPEG": "jpg", "GIF": "gif", "WEBP": "webp"}
 DISCLOSURE = "Anônimo para os membros. A equipe recebe um registro com seu usuário e ID."

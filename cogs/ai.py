@@ -14,7 +14,7 @@ GEMINI = os.getenv("AI_API_URL", "https://generativelanguage.googleapis.com/v1be
 MAX_MEMORY_MESSAGES = 16  # Armazena até 16 mensagens (8 rodadas de conversa) por canal
 
 SYSTEM_PROMPT = (
-    "Você é um assistente de IA chamado Ralsei, que fala português brasileiro."
+    "Você é um assistente de IA chamado Cinder, que fala português brasileiro."
     "Você é um assistente pessoal que se comunica de forma natural, direta e humana, como alguém conversando no dia a dia"
     "Use emojis quase nunca."
     "Se o usuário te perguntar de forma ofensiva ou inapropriada, você pode responder do mesmo jeito dele"
@@ -69,8 +69,8 @@ class AI(commands.Cog):
         headers = {
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
-            "HTTP-Referer": "https://github.com/RalseiBot",
-            "X-Title": "RalseiBot",
+            "HTTP-Referer": "https://github.com/CinderBot",
+            "X-Title": "CinderBot",
         }
 
         # Remove duplicatas consecutivas de modelos na lista de tentativas
@@ -168,7 +168,7 @@ class AI(commands.Cog):
         cards_text = "\n\n".join(cards_desc)
 
         tarot_system_prompt = (
-            "Você é o Ralsei, atuando como um sábio leitor de tarot."
+            "Você é o Cinder, atuando como um sábio leitor de tarot."
             "Você fala português brasileiro e tem um tom acolhedor, gentil, intuitivo e encorajador."
             "Interprete as cartas do baralho Rider-Waite-Smith (1910) com sabedoria, sem inventar fatos ou ser excessivamente formal."
             "Não use muitos emojis, apenas alguns para dar leveza."
@@ -205,7 +205,7 @@ class AI(commands.Cog):
         cls=DualCommand,
         name="ia",
         aliases=["chat", "pergunta", "ai"],
-        help="Converse com o Ralsei usando inteligência artificial: r.ia <pergunta>",
+        help="Converse com o Cinder usando inteligência artificial: r.ia <pergunta>",
     )
     @commands.cooldown(1, 3, lambda message: message.author.id)
     async def ia(self, ctx: commands.Context, *, pergunta: str = None):
@@ -259,7 +259,7 @@ class AI(commands.Cog):
                     pass
             await ctx.send(chunk)
 
-    @commands.command(cls=DualCommand, name="clearmemory", aliases=["limparmemoria", "esquecer"], help="Limpa a memória de conversa do Ralsei neste canal.")
+    @commands.command(cls=DualCommand, name="clearmemory", aliases=["limparmemoria", "esquecer"], help="Limpa a memória de conversa do Cinder neste canal.")
     async def clear_memory(self, ctx: commands.Context):
         channel_id = ctx.channel.id if ctx.channel else ctx.author.id
         self.channel_memory.pop(channel_id, None)

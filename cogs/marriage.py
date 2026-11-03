@@ -40,10 +40,10 @@ async def read_avatar(user):
 
 
 def render_ship(first_name, second_name, percentage, first_avatar=None, second_avatar=None):
-    canvas = Image.new("RGB", (SHIP_WIDTH, SHIP_HEIGHT), "#111D29")
+    canvas = Image.new("RGB", (SHIP_WIDTH, SHIP_HEIGHT), "#13304f")
     draw = ImageDraw.Draw(canvas)
     draw.rounded_rectangle((24, 24, 976, 656), radius=30, fill="#1C2C3A", outline="#34505A", width=2)
-    draw.text((500, 52), "RALSEI  /  SHIP", font=font(19, True), fill="#77E5BC", anchor="mt")
+    draw.text((500, 52), "CINDER  /  SHIP", font=font(19, True), fill="#b8472a", anchor="mt")
     draw.text((500, 87), "Dois corações, uma conexão", font=font(34, True), fill="#F6EDF2", anchor="mt")
 
     for x, name, data in ((270, first_name, first_avatar), (730, second_name, second_avatar)):
@@ -68,7 +68,7 @@ def render_ship(first_name, second_name, percentage, first_avatar=None, second_a
         else:
             draw.ellipse((x - 104, 167, x + 104, 375), fill="#253D49")
             initial = next((char.upper() for char in name if char.isalnum()), "?")
-            draw.text((x, 271), initial, font=font(72, True), fill="#77E5BC", anchor="mm")
+            draw.text((x, 271), initial, font=font(72, True), fill="#b8472a", anchor="mm")
         name_font = font(26, True)
         draw.text((x, 403), fit(draw, name, name_font, 320), font=name_font, fill="#F6EDF2", anchor="mt")
 
@@ -80,7 +80,7 @@ def render_ship(first_name, second_name, percentage, first_avatar=None, second_a
     draw.text((500, 545), "DE COMPATIBILIDADE", font=font(17, True), fill="#AFC5CC", anchor="mt")
     draw.rounded_rectangle((250, 582, 750, 594), radius=6, fill="#34505A")
     if percentage:
-        draw.rounded_rectangle((250, 582, 250 + 5 * percentage, 594), radius=6, fill="#77E5BC")
+        draw.rounded_rectangle((250, 582, 250 + 5 * percentage, 594), radius=6, fill="#b8472a")
     draw.text((500, 623), "Só uma brincadeira • A combinação deste par fica salva", font=font(16),
               fill="#AFC5CC", anchor="mt")
     output = BytesIO()

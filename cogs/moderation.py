@@ -13,7 +13,7 @@ COLOR_CONFIRM = 0xF1C40F
 COLOR_DANGER = 0xED4245
 COLOR_WARNING = 0xE67E22
 COLOR_SUCCESS = 0x57F287
-COLOR_INFO = 0x77E5BC
+COLOR_INFO = 0x13304F
 COLOR_CANCEL = 0x95A5A6
 COLOR_TIMEOUT = 0x7F8C8D
 
@@ -185,7 +185,7 @@ class ModerationConfirmView(nextcord.ui.View):
                     description="O tempo limite para confirmação expirou (60s). Nenhuma ação foi realizada.",
                     color=COLOR_TIMEOUT
                 )
-                timeout_embed.set_footer(text="Ação expirada • Ralsei Moderation")
+                timeout_embed.set_footer(text="Ação expirada • Cinder Moderation")
                 try:
                     await self.message.edit(embed=timeout_embed, view=self)
                 except Exception:
@@ -267,7 +267,7 @@ class Moderation(commands.Cog):
         success_embed.add_field(name="📝 Motivo", value=display_reason, inline=False)
         if avatar:
             success_embed.set_thumbnail(url=avatar)
-        success_embed.set_footer(text="Ação de moderação executada • Ralsei Moderation")
+        success_embed.set_footer(text="Ação de moderação executada • Cinder Moderation")
 
         cancel_embed = nextcord.Embed(
             title="❌ Ação Cancelada",
@@ -321,7 +321,7 @@ class Moderation(commands.Cog):
         success_embed.add_field(name="👤 Usuário ID", value=f"`{user_id}`", inline=True)
         success_embed.add_field(name="🛡️ Moderador", value=member_mention(ctx.author), inline=True)
         success_embed.add_field(name="📝 Motivo", value=display_reason, inline=False)
-        success_embed.set_footer(text="Ação de moderação executada • Ralsei Moderation")
+        success_embed.set_footer(text="Ação de moderação executada • Cinder Moderation")
 
         cancel_embed = nextcord.Embed(
             title="❌ Ação Cancelada",
@@ -384,7 +384,7 @@ class Moderation(commands.Cog):
         success_embed.add_field(name="📝 Motivo", value=display_reason, inline=False)
         if avatar:
             success_embed.set_thumbnail(url=avatar)
-        success_embed.set_footer(text="Ação de moderação executada • Ralsei Moderation")
+        success_embed.set_footer(text="Ação de moderação executada • Cinder Moderation")
 
         cancel_embed = nextcord.Embed(
             title="❌ Ação Cancelada",
@@ -459,7 +459,7 @@ class Moderation(commands.Cog):
             success_embed.add_field(name="📝 Motivo", value=display_reason, inline=False)
             if avatar:
                 success_embed.set_thumbnail(url=avatar)
-            success_embed.set_footer(text="Ação de moderação executada • Ralsei Moderation")
+            success_embed.set_footer(text="Ação de moderação executada • Cinder Moderation")
             return success_embed
 
         return await self.execute_with_confirmation(
@@ -508,7 +508,7 @@ class Moderation(commands.Cog):
         success_embed.add_field(name="📝 Motivo", value=display_reason, inline=False)
         if avatar:
             success_embed.set_thumbnail(url=avatar)
-        success_embed.set_footer(text="Ação de moderação executada • Ralsei Moderation")
+        success_embed.set_footer(text="Ação de moderação executada • Cinder Moderation")
 
         cancel_embed = nextcord.Embed(
             title="❌ Ação Cancelada",
@@ -607,7 +607,7 @@ class Moderation(commands.Cog):
                 success_embed.add_field(name="💬 Canal", value=channel_mention, inline=True)
                 success_embed.add_field(name="🛡️ Moderador", value=member_mention(ctx.author), inline=True)
                 success_embed.add_field(name="📝 Motivo", value=display_reason, inline=False)
-                success_embed.set_footer(text="Ação de moderação executada • Ralsei Moderation")
+                success_embed.set_footer(text="Ação de moderação executada • Cinder Moderation")
                 return success_embed
 
         return await self.execute_with_confirmation(
@@ -672,7 +672,7 @@ class Moderation(commands.Cog):
             success_embed.add_field(name="🗑️ Quantidade", value=f"{len(deleted)} mensagens", inline=True)
             success_embed.add_field(name="💬 Canal", value=channel_mention, inline=True)
             success_embed.add_field(name="🛡️ Moderador", value=member_mention(ctx.author), inline=True)
-            success_embed.set_footer(text="Ação de moderação executada • Ralsei Moderation")
+            success_embed.set_footer(text="Ação de moderação executada • Cinder Moderation")
             return success_embed
 
         return await self.execute_with_confirmation(
@@ -728,7 +728,7 @@ class Moderation(commands.Cog):
             success_embed.add_field(name="⏱️ Intervalo", value=f"{seconds} segundo(s)" if seconds > 0 else "Desativado", inline=True)
             success_embed.add_field(name="🛡️ Moderador", value=member_mention(ctx.author), inline=True)
             success_embed.add_field(name="📝 Motivo", value=display_reason, inline=False)
-            success_embed.set_footer(text="Ação de moderação executada • Ralsei Moderation")
+            success_embed.set_footer(text="Ação de moderação executada • Cinder Moderation")
             return success_embed
 
         return await self.execute_with_confirmation(

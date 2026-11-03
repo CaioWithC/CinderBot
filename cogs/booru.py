@@ -1,4 +1,4 @@
-"""e621 booru search commands and guild rankings for RalseiBot."""
+"""e621 booru search commands and guild rankings for CinderBot."""
 import logging
 import os
 import random
@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 E621_API_URL = "https://e621.net/posts.json"
 E621_COLOR = 0x012E57
 E621_ICON = "https://e621.net/favicon.ico"
-USER_AGENT = "RalseiBot/1.0 (by CaioWithC on e621)"
+USER_AGENT = "CinderBot/1.0 (by CaioWithC on e621)"
 
 
 # ---------------------------------------------------------------------------

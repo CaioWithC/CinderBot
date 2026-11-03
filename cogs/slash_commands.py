@@ -128,7 +128,7 @@ class SlashCommands(commands.Cog):
     async def sync(self, interaction: nextcord.Interaction):
         await self.invoke(interaction, "sync")
 
-    @nextcord.slash_command(name="ownersay", description="Dono: envia uma mensagem pelo Ralsei em qualquer servidor.",
+    @nextcord.slash_command(name="ownersay", description="Dono: envia uma mensagem pelo Cinder em qualquer servidor.",
                             integration_types=ALL_INSTALLS, contexts=ALL_CONTEXTS)
     async def ownersay(self, interaction: nextcord.Interaction):
         await self.invoke(interaction, "ownersay", ephemeral=True)
@@ -250,13 +250,13 @@ class SlashCommands(commands.Cog):
                         vaga: str = nextcord.SlashOption(description="Nome ou código do bico freelance (opcional; omita para abrir o menu).", required=False)):
         await self.invoke(interaction, "freelance", vaga=vaga)
 
-    @nextcord.slash_command(name="ia", description="Converse com o Ralsei usando inteligência artificial.",
+    @nextcord.slash_command(name="ia", description="Converse com o Cinder usando inteligência artificial.",
                             integration_types=ALL_INSTALLS, contexts=ALL_CONTEXTS)
     async def ia(self, interaction: nextcord.Interaction,
-                 pergunta: str = nextcord.SlashOption(description="Pergunta ou mensagem para o Ralsei.")):
+                 pergunta: str = nextcord.SlashOption(description="Pergunta ou mensagem para o Cinder.")):
         await self.invoke(interaction, "ia", pergunta=pergunta)
 
-    @nextcord.slash_command(name="clearmemory", description="Limpa a memória de conversa do Ralsei neste canal.",
+    @nextcord.slash_command(name="clearmemory", description="Limpa a memória de conversa do Cinder neste canal.",
                             integration_types=ALL_INSTALLS, contexts=ALL_CONTEXTS)
     async def clearmemory(self, interaction: nextcord.Interaction):
         await self.invoke(interaction, "clearmemory")
@@ -318,7 +318,7 @@ class SlashCommands(commands.Cog):
                     amount: str = nextcord.SlashOption(description=BET_DESCRIPTION)):
         await self.invoke(interaction, "slots", amount=amount)
 
-    @nextcord.slash_command(name="poker", description="Texas Hold’em com Ralsei: aposte D$ com amigos ou 4 bots.",
+    @nextcord.slash_command(name="poker", description="Texas Hold’em com Cinder: aposte D$ com amigos ou 4 bots.",
                             integration_types=ALL_INSTALLS, contexts=ALL_CONTEXTS)
     async def poker(self, interaction: nextcord.Interaction,
                     amount: str = nextcord.SlashOption(description="Entrada por pessoa: mínimo 20 D$. Ex.: 1000, 10k, 1m.",
@@ -385,7 +385,7 @@ class SlashCommands(commands.Cog):
 
     @profile.subcommand(name="color", description="Altere a cor dos painéis do seu perfil.")
     async def profile_color(self, interaction: nextcord.Interaction,
-                            value: str = nextcord.SlashOption(description="Cor hexadecimal de seis dígitos. Ex.: #77E5BC.")):
+                            value: str = nextcord.SlashOption(description="Cor hexadecimal de seis dígitos. Ex.: #B8472A.")):
         await self.invoke(interaction, "profile color", value=value)
 
     @profile.subcommand(name="about", description="Altere seu Sobre mim; use reset para limpar.")

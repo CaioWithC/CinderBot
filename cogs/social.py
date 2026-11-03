@@ -36,7 +36,7 @@ HEADER_HEIGHT, BACKGROUND_HEIGHT = 190, 400
 MAX_UPLOAD_BYTES = 8 * 1024 * 1024
 MAX_IMAGE_PIXELS = 16_000_000
 MAX_ABOUT_LENGTH = 300
-DEFAULT_COLOR = "#101C24"
+DEFAULT_COLOR = "#13304F"
 
 PETS_DIR = Path(__file__).resolve().parent.parent / "assets" / "profile_pet"
 
@@ -86,7 +86,7 @@ def get_available_pets():
 def parse_color(value):
     value = value.strip().removeprefix("#")
     if not re.fullmatch(r"[0-9a-fA-F]{6}", value):
-        raise EconomyError("Use uma cor hexadecimal de 6 dígitos, como `#77E5BC`.")
+        raise EconomyError("Use uma cor hexadecimal de 6 dígitos, como `#B8472A`.")
     return "#" + value.upper()
 
 
@@ -257,8 +257,8 @@ def render_profile(profile, name, avatar=None, marriage=None):
         draw.rectangle((0, HEADER_HEIGHT, WIDTH, HEADER_HEIGHT + BACKGROUND_HEIGHT - 1), fill="#182C35")
         for x in range(-400, WIDTH, 100):
             draw.line((x, HEADER_HEIGHT, x + 400, HEADER_HEIGHT + BACKGROUND_HEIGHT), fill="#213E46", width=2)
-        draw.text((WIDTH // 2, 365), "Seu espaço, seu estilo.", font=font(32, True), fill="#EBF7F3", anchor="mm")
-        draw.text((WIDTH // 2, 414), "Envie uma imagem com r.profile background", font=font(20), fill="#A9CDC4", anchor="mm")
+        draw.text((WIDTH // 2, 365), "Seu espaço, seu estilo.", font=font(32, True), fill="#FFFFFF", anchor="mm")
+        draw.text((WIDTH // 2, 414), "Envie uma imagem com r.profile background", font=font(20), fill="#F5CE5B", anchor="mm")
 
     # ── Footer: darker bar ──
     footer_y = HEADER_HEIGHT + BACKGROUND_HEIGHT
@@ -576,7 +576,7 @@ class Social(commands.Cog):
         finally:
             output.close()
 
-    @profile.command(cls=DualCommand, name="color", aliases=["cor"], help="Cor dos painéis do seu perfil: r.profile color #77E5BC")
+    @profile.command(cls=DualCommand, name="color", aliases=["cor"], help="Cor dos painéis do seu perfil: r.profile color #B8472A")
     async def color(self, ctx, value: str):
         color = parse_color(value)
         self.storage.update_profile(ctx.author.id, color=color)

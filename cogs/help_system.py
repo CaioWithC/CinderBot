@@ -1,4 +1,4 @@
-"""Interactive categorized help menu and embeds for RalseiBot."""
+"""Interactive categorized help menu and embeds for CinderBot."""
 import uuid
 
 import nextcord
@@ -6,25 +6,32 @@ from nextcord.ext import commands
 
 from cogs.command_support import slash_name
 
-RALSEI_COLOR = 0x77E5BC
+CINDER_COLOR = 0xB8472A  # #b8472a (Primary Ember Red-Orange)
+CINDER_NAVY = 0x13304F   # #13304f (Deep Navy)
+CINDER_WHITE = 0xFFFFFF  # #ffffff (Pure White)
+CINDER_GOLD = 0xF5CE5B   # #f5ce5b (Warm Gold)
+RALSEI_COLOR = CINDER_COLOR
 
 HELP_CATEGORIES = {
     "economia": {
         "label": "Economia",
         "emoji": "🪙",
         "description": "Trabalho, saldos, transferências e roubos de DarkMoney",
+        "color": CINDER_GOLD,
         "commands": ["balance", "daily", "pay", "work", "freelance", "rob"],
     },
     "jogos": {
         "label": "Jogos & Cassino",
         "emoji": "🎲",
         "description": "Blackjack, Minas, Dados, Caça-níqueis, Poker e Uno",
+        "color": CINDER_COLOR,
         "commands": ["blackjack", "dice", "mines", "poker", "six", "slots"],
     },
     "social": {
         "label": "Social & Casamento",
         "emoji": "💍",
         "description": "Perfil customizável, casamentos, ship e ranking global",
+        "color": CINDER_NAVY,
         "commands": [
             "profile",
             "profile color",
@@ -46,24 +53,28 @@ HELP_CATEGORIES = {
         "label": "Roleplay",
         "emoji": "🎭",
         "description": "Interações com GIFs animados de carinho e afeto",
+        "color": CINDER_COLOR,
         "commands": ["kiss", "hug", "pat"],
     },
     "missoes_musica": {
         "label": "Missões & Música",
         "emoji": "📜",
         "description": "Missões diárias com recompensas e música do dia",
+        "color": CINDER_GOLD,
         "commands": ["missions", "musica"],
     },
     "moderacao": {
         "label": "Moderação",
         "emoji": "🛡️",
         "description": "Punições, controle de canais e limpeza de mensagens",
+        "color": CINDER_NAVY,
         "commands": ["ban", "unban", "kick", "mute", "unmute", "lock", "unlock", "clear", "slowmode"],
     },
     "administracao": {
         "label": "Administração",
         "emoji": "⚙️",
         "description": "Painéis, quiz, tickets, confissões e economia de administradores",
+        "color": CINDER_NAVY,
         "commands": [
             "activity",
             "addbalance",
@@ -79,13 +90,29 @@ HELP_CATEGORIES = {
             "embedsend",
             "admmusica",
             "sync",
+            "ownersay",
         ],
     },
     "geral": {
         "label": "Informações & Geral",
         "emoji": "ℹ️",
         "description": "Comandos gerais e utilidades do bot",
-        "commands": ["help", "ping", "site", "ia", "clearmemory", "e621"],
+        "color": CINDER_COLOR,
+        "commands": [
+            "help",
+            "ping",
+            "site",
+            "ia",
+            "clearmemory",
+            "e621",
+            "e621 image",
+            "e621 video",
+            "e621 random",
+            "e621 top",
+            "e621 blocktag",
+            "e621 unblocktag",
+            "e621 blocklist",
+        ],
     },
 }
 
@@ -93,10 +120,10 @@ HELP_CATEGORIES = {
 def build_home_embed(bot, user) -> nextcord.Embed:
     name = getattr(user, "display_name", None) or getattr(user, "name", "Viajante")
     embed = nextcord.Embed(
-        title="✨ Central de Ajuda · Ralsei",
-        color=RALSEI_COLOR,
+        title="✨ Central de Ajuda · Cinder",
+        color=CINDER_COLOR,
         description=(
-            f"Olá, **{name}**! Eu sou o **Ralsei**, o príncipe do Reino das Trevas! 💚\n"
+            f"Olá, **{name}**! Eu sou o **Cinder**! 🔥\n"
             "Aqui você encontra todos os meus comandos organizados por categoria.\n\n"
             "📌 **Como usar meus comandos:**\n"
             "• **Slash:** Digite `/` e selecione o comando desejado.\n"
@@ -133,7 +160,7 @@ def build_category_embed(bot, category_key: str, user) -> nextcord.Embed:
 
     embed = nextcord.Embed(
         title=f"{cat['emoji']} Comandos de {cat['label']}",
-        color=RALSEI_COLOR,
+        color=cat.get("color", CINDER_COLOR),
         description=(
             f"*{cat['description']}*\n\n"
             "💡 *Dica: Use `r.help <comando>` ou `/help command:<comando>` para ver detalhes e opções completas.*"
@@ -160,7 +187,7 @@ def build_command_detail_embed(cmd: commands.Command, user) -> nextcord.Embed:
     name = getattr(user, "display_name", None) or getattr(user, "name", "Viajante")
     embed = nextcord.Embed(
         title=f"Ajuda: {cmd.qualified_name}",
-        color=RALSEI_COLOR,
+        color=CINDER_COLOR,
         description=cmd.help or "Sem descrição detalhada.",
     )
     sig = f" {cmd.signature}".rstrip()

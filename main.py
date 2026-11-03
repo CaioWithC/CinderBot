@@ -16,17 +16,20 @@ from cogs.help_system import build_command_detail_embed, build_home_embed, HelpV
 log = logging.getLogger(__name__)
 
 
-class RalseiBot(commands.Bot):
+class CinderBot(commands.Bot):
     async def get_prefix(self, message):
         default = self.command_prefix
         if message and getattr(message, "guild", None):
             try:
                 prefix = database.get_guild_prefix(message.guild.id)
                 if prefix and prefix != default:
-                    return (prefix, default)
+                    return (prefix, default, "c.")
             except Exception:
                 pass
-        return default
+        return (default, "c.") if isinstance(default, str) and default == "r." else default
+
+
+RalseiBot = CinderBot
 
 
 def error_message(error, usage, *, now=None):
@@ -70,7 +73,7 @@ def create_bot():
     intents = nextcord.Intents.default()
     intents.members = True
     intents.message_content = True
-    bot = RalseiBot(command_prefix="r.", intents=intents, help_command=None,
+    bot = CinderBot(command_prefix="r.", intents=intents, help_command=None,
                     allowed_mentions=nextcord.AllowedMentions.none())
 
     @bot.check
@@ -117,7 +120,7 @@ def create_bot():
 
     @bot.command(cls=DualCommand, name="site", help="Visite o nosso site.")
     async def site(ctx):
-        await ctx.send("https://ralseibot.vercel.app/")
+        await ctx.send("https://cinderbot.vercel.app/")
 
     @bot.command(cls=DualCommand, name="sync",
                  help="Administrador: sincroniza os comandos de barra com o Discord.")

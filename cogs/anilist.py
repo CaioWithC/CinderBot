@@ -1,4 +1,4 @@
-"""AniList profile lookup and card generator for RalseiBot."""
+"""AniList profile lookup and card generator for CinderBot."""
 import asyncio
 from io import BytesIO
 import logging
@@ -272,7 +272,7 @@ async def fetch_anilist_data(username: str) -> dict:
     headers = {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "User-Agent": "RalseiBot/1.0",
+        "User-Agent": "CinderBot/1.0",
     }
     timeout = aiohttp.ClientTimeout(total=10)
     async with aiohttp.ClientSession(timeout=timeout) as session:
