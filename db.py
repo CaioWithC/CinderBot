@@ -995,6 +995,12 @@ class Database:
                     QuizRound.guild_id == str(guild_id), QuizRound.status.in_(["sending", "active"]))):
                 active.status = "cancelled"
 
+    def reset_quiz_timer(self, guild_id):
+        with self.transaction() as session:
+            row = session.get(QuizConfig, str(guild_id))
+            if row and row.enabled:
+                row.next_at = 0
+
     def submit_quiz_suggestion(self, suggestion_id, guild_id, author_id, question, answers, review_channel_id, now):
         with self.transaction() as session:
             if session.get(QuizSuggestion, str(suggestion_id)):

@@ -297,6 +297,53 @@ class Quiz(commands.Cog):
             return
         await self.send_panel(ctx)
 
+    @commands.command(cls=DualCommand, name="quizforce",
+        help="Administrador: r.quizforce — força uma pergunta de quiz imediatamente no canal configurado, ignorando tempo e atividade.")
+    @commands.guild_only()
+    @commands.has_guild_permissions(administrator=True)
+    async def quizforce(self, ctx):
+        async with self.lock_for(ctx.guild.id):
+            config = self.storage.quiz_config(ctx.guild.id)
+            if not config or not config["enabled"]:
+                await ctx.send("Configure primeiro com `r.quiz #chat #revisao [premio]` ou `/quiz`.")
+                return
+            guild = ctx.guild
+            channel = guild.get_channel(int(config["channel_id"]))
+            if not self.usable_channel(channel):
+                await ctx.send("O canal configurado para o quiz está inacessível. Verifique as permissões.")
+                return
+            active = self.storage.quiz_round(guild.id)
+            if active:
+                await ctx.send("Já existe uma rodada em andamento. Aguarde ela encerrar ou expire.")
+                return
+            questions = [*SEED_QUESTIONS, *self.storage.approved_quiz_questions(guild.id)]
+            choices = [q for q in questions if q[0] not in self.recent_questions[guild.id]]
+            if not choices:
+                await ctx.send("Não há perguntas disponíveis no momento.")
+                return
+            now = self.clock()
+            self.storage.reset_quiz_timer(guild.id)
+            question, answers = self.rng.choice(choices)
+            row = self.storage.prepare_quiz_round(guild.id, question, answers, now,
+                int(now) + ROUND_SECONDS, self.next_time(now))
+            if row is None:
+                await ctx.send("Não foi possível criar a rodada. Tente novamente.")
+                return
+            embed = nextcord.Embed(title="🧠 Quiz relâmpago!", description=question, color=0xF5CE5B)
+            embed.add_field(name=f"Prêmio: {row['reward']:,} D$", value=
+                f"Escreva a resposta neste chat. A primeira pessoa a acertar ganha!\n"
+                f"Encerra <t:{row['expires_at']}:R>.", inline=False)
+            embed.set_footer(text="Maiúsculas e acentos não fazem diferença. Responda apenas com a resposta.")
+            try:
+                message = await channel.send(embed=embed, allowed_mentions=nextcord.AllowedMentions.none())
+                self.storage.publish_quiz_round(row["id"], message.id)
+            except Exception:
+                self.storage.cancel_quiz_round(row["id"])
+                raise
+            self.recent_questions[guild.id].append(question)
+            self.activity.pop(guild.id, None)
+        await ctx.send(f"✅ Pergunta forçada no {channel.mention}!")
+
     @commands.command(cls=DualCommand, name="quizoff", help="Administrador: desativa o quiz e cancela a rodada atual, preservando as perguntas aprovadas.")
     @commands.guild_only()
     @commands.has_guild_permissions(administrator=True)

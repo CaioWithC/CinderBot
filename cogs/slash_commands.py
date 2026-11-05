@@ -183,6 +183,11 @@ class SlashCommands(commands.Cog):
     async def quizpanel(self, interaction: nextcord.Interaction):
         await self.invoke(interaction, "quizpanel")
 
+    @nextcord.slash_command(name="quizforce", description="Administrador: força uma pergunta de quiz imediatamente no canal configurado.",
+                            contexts=GUILD_ONLY, default_member_permissions=ADMIN)
+    async def quizforce(self, interaction: nextcord.Interaction):
+        await self.invoke(interaction, "quizforce")
+
     @nextcord.slash_command(name="quizoff", description="Administrador: desativa o quiz automático.",
                             contexts=GUILD_ONLY, default_member_permissions=ADMIN)
     async def quizoff(self, interaction: nextcord.Interaction):

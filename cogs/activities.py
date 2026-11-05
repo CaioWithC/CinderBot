@@ -21,14 +21,14 @@ MAX_ACTIVITY_LENGTH = 128
 # Emoji are part of the text: Discord bot activities support name/state/type,
 # while a separate activity emoji field is not available to bot accounts.
 ACTIVITIES = (
-    "🤍 STREAM ILLIT BREAK EVEN",
+    "🐇",
     "📚 {commands} comandos com r. e / | Use r.help ou /help",
-    "💿 THE WORLD REVOLVING - Toby Fox",
+    "🐇 para Tortty <3",
     "🏡 {server}",
     "🌍 Levando carinho a {guilds} servidor(es)!",
     "🎲 Slots, blackjack e mines: perca tudo!",
-    "🐐 Feito com carinho pelo Caio!",
-    "⏱️ Online há {uptime} | {completed} comandos concluídos nesta sessão",
+    "🐇 Feito com carinho pelo Caio!",
+    "⏱️ Online há {uptime}",
     "🎨 Seu perfil, seu estilo: r.profile | /profile view",
     "📡 Latência: {latency} | Pronto para ajudar!",
     "🎁 Comandos de economia, social e jogos: r.help | /help",
