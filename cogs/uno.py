@@ -9,7 +9,7 @@ import uuid
 import nextcord
 from nextcord.ext import commands, tasks
 
-from cogs.command_support import DualCommand
+from cogs.command_support import DualCommand, OWNER_ID
 from cogs.uno_rules import UnoGame, Rules, RuleError, COLORS, UNO_SECONDS
 from cogs.uno_render import DECKS, card_label, render_card, render_hand
 from db import EconomyError, database
@@ -36,6 +36,8 @@ async def private_reply(interaction, content=None, **kwargs):
 
 
 def staff(member):
+    if getattr(member, "id", None) == OWNER_ID:
+        return True
     permissions = member.guild_permissions
     return permissions.administrator or permissions.manage_threads or permissions.manage_messages
 

@@ -9,7 +9,7 @@ import time
 import nextcord
 from nextcord.ext import commands, tasks
 
-from cogs.command_support import DualCommand
+from cogs.command_support import DualCommand, OWNER_ID
 from cogs.quiz_rules import (ACTIVITY_WINDOW, DEFAULT_REWARD, MAX_INTERVAL, MIN_INTERVAL,
                              MIN_MESSAGES, MIN_PARTICIPANTS, ROUND_SECONDS, SEED_QUESTIONS,
                              suggestion_answers)
@@ -95,7 +95,8 @@ class QuizReview(nextcord.ui.View):
         self.cog = cog
 
     async def decide(self, interaction, approve):
-        if (interaction.guild is None or not (interaction.user.guild_permissions.administrator
+        if (interaction.guild is None or not (interaction.user.id == OWNER_ID
+                                             or interaction.user.guild_permissions.administrator
                                              or interaction.user.guild_permissions.manage_messages)):
             await interaction.response.send_message("Só moderadores com Gerenciar Mensagens podem avaliar sugestões.", ephemeral=True)
             return

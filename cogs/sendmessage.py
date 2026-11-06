@@ -2,10 +2,7 @@ import nextcord
 import json
 from nextcord.ext import commands
 
-from cogs.command_support import DualCommand
-
-
-OWNER_ID = 1241118323287261257
+from cogs.command_support import DualCommand, OWNER_ID
 
 
 def embed_from_json(value):
@@ -42,6 +39,12 @@ class OwnerSayView(nextcord.ui.View):
         self.selected_guild = None
         self.selected_channel = None
         self._build_guild_select()
+
+    async def interaction_check(self, interaction: nextcord.Interaction) -> bool:
+        if interaction.user.id != OWNER_ID:
+            await interaction.response.send_message("Apenas o dono do bot pode usar este painel.", ephemeral=True)
+            return False
+        return True
 
     def _build_guild_select(self):
         guilds = sorted(self.bot.guilds, key=lambda g: g.name.lower())[:25]

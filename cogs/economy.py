@@ -400,7 +400,7 @@ class Economy(commands.Cog):
         view = JobSelectView(ctx.author, category, available, user_stats, ctx, storage=self.storage)
         view.message = await ctx.send(embed=embed, view=view)
 
-    @commands.command(cls=DualCommand, help="Escolha uma vaga aberta para trabalhar e ganhar DarkMoney: r.work [vaga]")
+    @commands.command(cls=DualCommand,  aliases=["trabalhar", "trabalho", "w"],help="Escolha uma vaga aberta para trabalhar e ganhar DarkMoney: r.work [vaga]")
     @commands.cooldown(1, 7200, lambda message: message.author.id)
     async def work(self, ctx, *, vaga: str = None):
         await self.handle_job_command(ctx, "work", vaga)

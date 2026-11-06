@@ -10,7 +10,13 @@ from nextcord.ext import commands
 load_dotenv()
 
 from db import EconomyError, database
-from cogs.command_support import DualCommand, ModerationError, CommandDisabledError, slash_name
+from cogs.command_support import (
+    DualCommand,
+    ModerationError,
+    CommandDisabledError,
+    slash_name,
+    OWNER_ID,
+)
 from cogs.help_system import build_command_detail_embed, build_home_embed, HelpView
 
 log = logging.getLogger(__name__)
@@ -75,10 +81,13 @@ def create_bot():
     intents.message_content = True
     bot = CinderBot(command_prefix="r.", intents=intents, help_command=None,
                     allowed_mentions=nextcord.AllowedMentions.none())
+    bot.owner_id = OWNER_ID
 
     @bot.check
     async def check_command_enabled(ctx):
         if ctx.guild and ctx.command:
+            if getattr(ctx.author, "id", None) == OWNER_ID:
+                return True
             root_name = ctx.command.root_parent.name if ctx.command.root_parent else ctx.command.name
             if root_name not in ("help", "ping", "sync"):
                 if database.is_command_disabled(str(ctx.guild.id), root_name) or database.is_command_disabled(str(ctx.guild.id), ctx.command.qualified_name):

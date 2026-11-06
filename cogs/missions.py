@@ -11,7 +11,7 @@ class Missions(commands.Cog):
         self.bot = bot
         self.storage = storage if storage is not None else database
 
-    @commands.command(cls=DualCommand, aliases=["mission", "missoes", "missões"],
+    @commands.command(cls=DualCommand, aliases=["mission", "missoes", "missões", "q"],
                       help="Veja suas missões diárias: r.missions. Resgate os bônus com r.missions claim. Renova às 00:00 GMT-3.")
     async def missions(self, ctx, action: str = "view"):
         action = action.casefold()

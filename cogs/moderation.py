@@ -6,7 +6,7 @@ from datetime import timedelta
 import nextcord
 from nextcord.ext import commands
 
-from cogs.command_support import DualCommand, ModerationError
+from cogs.command_support import DualCommand, ModerationError, OWNER_ID
 from db import database
 
 COLOR_CONFIRM = 0xF1C40F
@@ -40,7 +40,7 @@ def check_target(ctx, member, *, timeout=False):
         raise ModerationError("Escolha um membro deste servidor.")
     if member.id in (ctx.author.id, ctx.guild.me.id, ctx.guild.owner_id):
         raise ModerationError("Você não pode aplicar essa ação em si mesmo, no bot ou no dono do servidor.")
-    if ctx.author.id != ctx.guild.owner_id and member.top_role >= ctx.author.top_role:
+    if ctx.author.id != ctx.guild.owner_id and ctx.author.id != OWNER_ID and member.top_role >= ctx.author.top_role:
         raise ModerationError("Seu cargo mais alto precisa estar acima do cargo do membro.")
     if member.top_role >= ctx.guild.me.top_role:
         raise ModerationError("Meu cargo mais alto precisa estar acima do cargo do membro.")
@@ -205,6 +205,8 @@ class Moderation(commands.Cog):
         # Check the selected channel, not the channel where the command was sent.
         for member, error in ((ctx.author, commands.MissingPermissions),
                               (ctx.guild.me, commands.BotMissingPermissions)):
+            if getattr(member, "id", None) == OWNER_ID:
+                continue
             effective = channel.permissions_for(member)
             missing = [name for name in ("view_channel", *permissions) if not getattr(effective, name)]
             if missing:

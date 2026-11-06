@@ -6,7 +6,7 @@ import unicodedata
 import nextcord
 from nextcord.ext import commands
 
-from cogs.command_support import DualCommand
+from cogs.command_support import DualCommand, OWNER_ID
 from db import EconomyError, database
 
 TICKET_BUTTON_ID = "cinderbot:open-ticket"
@@ -122,7 +122,8 @@ class Tickets(commands.Cog):
         if owner is None:
             await ctx.send("Este canal não é um ticket.")
             return
-        if (ctx.author.id != int(owner[1])
+        if (ctx.author.id != OWNER_ID
+                and ctx.author.id != int(owner[1])
                 and not channel.permissions_for(ctx.author).manage_channels):
             await ctx.send("Só o dono do ticket ou quem tem permissão de Gerenciar Canais pode fechá-lo.")
             return

